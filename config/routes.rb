@@ -5,4 +5,6 @@ Vsme::Application.routes.draw do
 
   resource :games
 
+  resource :results
+
 end
