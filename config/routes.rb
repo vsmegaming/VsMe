@@ -3,4 +3,6 @@ Vsme::Application.routes.draw do
 
   root 'dashboard#show'
 
+  resource :games
+
 end

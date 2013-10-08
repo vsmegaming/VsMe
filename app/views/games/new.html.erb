@@ -1,0 +1,13 @@
+<h1>PONG!</h1>
+
+<%= form_for @game do |f| %>
+  <div>
+    <%= f.label :score, "Enter a score" %>
+    <%= f.number_field :score %>
+  </div>
+
+  <div>
+    <%= f.submit "Submit", class: "btn" %>
+  </div>
+
+<% end %>
