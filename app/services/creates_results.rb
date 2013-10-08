@@ -14,11 +14,9 @@ class CreatesResults
     last_result = Result.last
 
     if last_result.game_two_id == nil
-      puts "Game two = nil"
       last_result.game_two_id = @game_id
       last_result.save
     else
-      puts "New Result"
       Result.create(game_one_id: @game_id)
     end
 
