@@ -1,3 +1,4 @@
 class Game < ActiveRecord::Base
-  has_one :user
+  belongs_to :user
+  belongs_to :result
 end
