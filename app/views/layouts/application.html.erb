@@ -18,11 +18,6 @@
         <%= link_to "VSMe", root_path, class: 'brand' %>
 
         <div class="nav-collapse collapse">
-          <% if current_user %>
-            <ul class="nav">
-              <li><%= link_to "Dashboard", root_path %></li>
-            </ul>
-          <% end%>
           <ul class="nav pull-right">
             <% if user_signed_in? %>
               <li><%= link_to current_user.email, id: "user_name" %></li>
