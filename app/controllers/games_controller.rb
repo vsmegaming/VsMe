@@ -10,7 +10,7 @@ class GamesController < ApplicationController
     @game.credits_wagered = 5
 
     if @game.save
-      CreatesResults.with(@game.id)
+      CreatesResults.with(@game)
       redirect_to root_path
     else
       render :new

@@ -4,20 +4,24 @@ class CreatesResults
               :game_two_id,
               :last_result
 
-  def self.with game_id
-    CreatesResults.new game_id
+  def self.with game
+    CreatesResults.new game
   end
 
-  def initialize game_id
-    game_id = game_id
+  def initialize game
+    @game = game
     last_result = Result.last
 
     if last_result.game_two_id == nil
-      last_result.game_two_id = game_id
+      last_result.game_two_id = @game.id
       last_result.save
+      @game.result_id = last_result.id
+      @game.save
       DeterminesWinner.with()
     else
-      Result.create(game_one_id: game_id)
+      new_result = Result.create(game_one_id: @game.id)
+      @game.result_id = new_result.id
+      @game.save
     end
   end
 
