@@ -17,7 +17,11 @@
       <td>Pong</td>
       <td><%= game.score %></td>
       <td><%= game.credits_wagered %></td>
-      <td>-</td>
+      <% if game.result.id == current_user.id %>
+        <td>Winner</td>
+      <% else %>
+        <td>Loser</td>
+      <% end %>
     </tr>
     <% end %>
   </tbody>
