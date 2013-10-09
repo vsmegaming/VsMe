@@ -1,17 +1,48 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Vsme</title>
-  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
-  
-  <p class="notice"><%= notice %></p>
-  <p class="alert"><%= alert %></p>
+  <head>
+    <title>Vsme</title>
+    <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+    <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
 
-<%= yield %>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <%= link_to "VSMe", root_path, class: 'brand' %>
 
-</body>
+        <div class="nav-collapse collapse">
+          <% if current_user %>
+            <ul class="nav">
+              <li><%= link_to "Dashboard", root_path %></li>
+            </ul>
+          <% end%>
+          <ul class="nav pull-right">
+            <% if user_signed_in? %>
+              <li><%= link_to current_user.email, id: "user_name" %></li>
+              <li><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></li>
+            <% else %>
+              <li><%= link_to "Sign up", new_user_registration_path %></li>
+              <li><%= link_to "Sign in", new_user_session_path %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <% flash.each do |name, msg| %>
+        <%= content_tag :div, msg, id: "flash_#{name}", class: "alert" %>
+      <% end %>
+
+      <%= yield %>
+    </div>
+
+  </body>
 </html>
