@@ -12,7 +12,7 @@ class CreatesResults
     @game = game
     last_result = Result.last
 
-    if last_result.game_two_id == nil
+    if last_result && last_result.game_two_id == nil
       last_result.game_two_id = @game.id
       last_result.save
       @game.result_id = last_result.id
@@ -23,6 +23,7 @@ class CreatesResults
       @game.result_id = new_result.id
       @game.save
     end
+
   end
 
 end
