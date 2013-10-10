@@ -1,3 +1,4 @@
+window.onLoad=function(){
 // RequestAnimFrame: a browser API for getting smooth animations
 window.requestAnimFrame = (function(){
 	return  window.requestAnimationFrame       || 
@@ -395,3 +396,4 @@ function btnClick(e) {
 
 // Show the start screen
 startScreen();
+};
