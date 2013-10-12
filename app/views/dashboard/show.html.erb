@@ -19,6 +19,8 @@
         <td>Winner</td>
       <% elsif game.result.winning_user_id == nil %>
         <td>-</td>
+      <% elsif game.result.winning_user_id == -1 %>
+        <td>Tie</td>
       <% else %>
         <td>Loser</td>
       <% end %>
