@@ -1,5 +1,7 @@
-<%= link_to "Play Game", new_games_path, class: "btn" %>
-<h4>Credits: <%= current_user.credits %></h4>
+<div>
+  <%= link_to "Play Game", new_games_path, class: "btn" %>
+  <h4 class="pull-right">Credits: <%= current_user.credits %></h4>
+</div>
 
 <table class="table">
   <thead>
