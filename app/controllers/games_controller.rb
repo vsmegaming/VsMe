@@ -1,5 +1,4 @@
 class GamesController < ApplicationController
-  respond_to :html
 
   def new
     @game = Game.new
@@ -10,9 +9,12 @@ class GamesController < ApplicationController
     @game.user_id = current_user.id
     @game.credits_wagered = 5
 
-    CreatesResults.with(@game)
-    respond_with(@game, location: root_path)
-
+    if @game.save
+      CreatesResults.with(@game)
+      redirect_to root_path
+    else
+      render :new
+    end
   end
 
   private
