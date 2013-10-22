@@ -56,14 +56,12 @@ $(document).ready(function(){
 	function paint()
 	{
 		//To avoid the snake trail we need to paint the BG on every frame
-		//Lets paint the canvas now
 		ctx.fillStyle = "white";
 		ctx.fillRect(0, 0, w, h);
 		ctx.strokeStyle = "black";
 		ctx.strokeRect(0, 0, w, h);
 		
 		//The movement code for the snake to come here.
-		//The logic is simple
 		//Pop out the tail cell and place it infront of the head cell
 		var nx = snake_array[0].x;
 		var ny = snake_array[0].y;
@@ -76,13 +74,12 @@ $(document).ready(function(){
 		else if(d == "down") ny++;
 		
 		//Lets add the game over clauses now
-		//This will restart the game if the snake hits the wall
+		//This will end the game if the snake hits the wall
 		//Lets add the code for body collision
-		//Now if the head of the snake bumps into its body, the game will restart
+		//Now if the head of the snake bumps into its body, the game will end
 		if(nx == -1 || nx == w/cw || ny == -1 || ny == h/cw || check_collision(nx, ny, snake_array))
 		{
-			//end game
-      confirm("Game over");
+      gameOver();
 		}
 		
 		//Lets write the code to make the snake eat the food
@@ -139,6 +136,11 @@ $(document).ready(function(){
 		}
 		return false;
 	}
+
+  function gameOver(){
+    $('#game_score').val(score);
+    $('#new_game').submit();
+  }
 	
 	$(document).keydown(function(e){
 		var key = e.which;
