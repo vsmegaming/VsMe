@@ -14,7 +14,11 @@ $(document).ready(function(){
 	//Lets create the snake now
 	var snake_array; //an array of cells to make up the snake
 	
-	function init()
+  $("#start").on("click", function(){
+    playGame();
+  });
+
+	function playGame()
 	{
 		d = "right"; //default direction
 		create_snake();
@@ -27,7 +31,6 @@ $(document).ready(function(){
 		if(typeof game_loop != "undefined") clearInterval(game_loop);
 		game_loop = setInterval(paint, 60);
 	}
-	init();
 	
 	function create_snake()
 	{
@@ -40,7 +43,6 @@ $(document).ready(function(){
 		}
 	}
 	
-	//Lets create the food now
 	function create_food()
 	{
 		food = {
@@ -51,7 +53,6 @@ $(document).ready(function(){
 		//Because there are 45(450/10) positions accross the rows and columns
 	}
 	
-	//Lets paint the snake now
 	function paint()
 	{
 		//To avoid the snake trail we need to paint the BG on every frame
@@ -80,10 +81,8 @@ $(document).ready(function(){
 		//Now if the head of the snake bumps into its body, the game will restart
 		if(nx == -1 || nx == w/cw || ny == -1 || ny == h/cw || check_collision(nx, ny, snake_array))
 		{
-			//restart game
-			init();
-			//Lets organize the code a bit now.
-			return;
+			//end game
+      confirm("Game over");
 		}
 		
 		//Lets write the code to make the snake eat the food
@@ -141,7 +140,6 @@ $(document).ready(function(){
 		return false;
 	}
 	
-	//Lets add the keyboard controls now
 	$(document).keydown(function(e){
 		var key = e.which;
 		//We will add another clause to prevent reverse gear
@@ -149,7 +147,6 @@ $(document).ready(function(){
 		else if(key == "38" && d != "down") d = "up";
 		else if(key == "39" && d != "left") d = "right";
 		else if(key == "40" && d != "up") d = "down";
-		//The snake is now keyboard controllable
 	})
 
 })
