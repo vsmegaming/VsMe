@@ -1,16 +1,11 @@
 <h1>Snake</h1>
 
-<%= form_for @game do |f| %>
-  <div>
-    <%= f.label :score, "Enter a score" %>
+<div class='hidden'>
+  <%= form_for @game do |f| %>
     <%= f.number_field :score %>
-  </div>
-
-  <div>
     <%= f.submit "Submit", class: "btn" %>
-  </div>
-
-<% end %>
+  <% end %>
+</div>
 
 <div>
   <button id='start' class="btn">Start!</button>

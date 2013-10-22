@@ -6,7 +6,6 @@
 <table class="table">
   <thead>
     <tr>
-      <th>Game</th>
       <th>Score</th>
       <th>Wager</th>
       <th>Outcome</th>
@@ -15,7 +14,6 @@
   <tbody>
     <% @games.each do |game| %>
     <tr>
-      <td>Pong</td>
       <td><%= game.score %></td>
       <td><%= game.credits_wagered %></td>
       <% if game.result.winning_user_id == current_user.id %>
