@@ -6,7 +6,7 @@ $(document).ready(function(){
 	var h = $("#canvas").height();
 	
 	//Lets save the cell width in a variable for easy control
-	var cw = 10;
+	var cw = 5;
 	var d;
 	var food;
 	var score;
@@ -151,4 +151,21 @@ $(document).ready(function(){
 		else if(key == "40" && d != "up") d = "down";
 	})
 
+  $("#left").on("click", function(){
+    d = "left";
+  });
+
+  $("#right").on("click", function(){
+    d = "right";
+  });
+
+  $("#up").on("click", function(){
+    d = "up";
+  });
+
+  $("#down").on("click", function(){
+    d = "down";
+  });
+
 })
+
