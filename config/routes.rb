@@ -1,10 +1,8 @@
 Vsme::Application.routes.draw do
   devise_for :users
 
-  root 'dashboard#show'
+  root 'games#index'
 
   resource :games
-
-  resource :results
 
 end
