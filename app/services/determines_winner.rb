@@ -17,6 +17,7 @@ class DeterminesWinner
 
     if game_one.score < game_two.score
       last_result.winning_user_id = game_two.user_id
+      last_result.losing_user_id = game_one.user_id
       last_result.save
       user_one.credits -= 5
       user_one.save
@@ -24,6 +25,7 @@ class DeterminesWinner
       user_two.save
     elsif game_one.score > game_two.score
       last_result.winning_user_id = game_one.user_id
+      last_result.losing_user_id = game_two.user_id
       last_result.save
       user_one.credits += 5
       user_one.save
