@@ -19,16 +19,12 @@
       <td><%= game.credits_wagered %></td>
       <td><%= game.outcome(current_user) %></td>
       <% if game.result.winning_user_id == current_user.id %>
-        <td>Winner</td>
         <td><%= User.find(game.result.losing_user_id).email %></td>
       <% elsif game.result.winning_user_id == nil %>
         <td>-</td>
-        <td>-</td>
       <% elsif game.result.winning_user_id == -1 %>
-        <td>Tie</td>
         <td>-</td>
       <% else %>
-        <td>Loser</td>
         <td><%= User.find(game.result.winning_user_id).email %></td>
       <% end %>
     </tr>
