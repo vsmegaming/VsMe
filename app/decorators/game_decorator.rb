@@ -13,4 +13,16 @@ class GameDecorator < Draper::Decorator
     end
   end
 
+  def opponent(current_user)
+    if game.result.winning_user_id == current_user.id
+      User.find(game.result.losing_user_id).email
+    elsif game.result.winning_user_id == nil
+      "-"
+    elsif game.result.winning_user_id == -1
+      "-"
+    else
+      User.find(game.result.winning_user_id).email
+    end
+  end
+
 end
