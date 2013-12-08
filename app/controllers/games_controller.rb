@@ -1,7 +1,7 @@
 class GamesController < ApplicationController
 
   def index
-    @games = current_user.games
+    @games = current_user.games.decorate
   end
 
   def new

@@ -17,6 +17,7 @@
     <tr>
       <td><%= game.score %></td>
       <td><%= game.credits_wagered %></td>
+      <td><%= game.outcome(current_user) %></td>
       <% if game.result.winning_user_id == current_user.id %>
         <td>Winner</td>
         <td><%= User.find(game.result.losing_user_id).email %></td>
