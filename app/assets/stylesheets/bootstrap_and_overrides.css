@@ -8,6 +8,9 @@ To use Glyphicons sprites instead of Font Awesome, replace with "require twitter
 
 body {
   background-color: #e1713b;
+  margin: 0;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .hidden{
@@ -61,6 +64,8 @@ body {
 
 .sign-in-center {
   text-align: center;
+  width: 200px;
+  margin: auto;
 }
 
 .btn-sign-in {
@@ -89,4 +94,13 @@ body {
 
 .sign-in-links {
   color: #b3b3b3;
+}
+
+.container {
+  margin: 0 20px;
+}
+
+.navbar-fixed-top {
+  padding-left: 20px;
+  padding-right: 20px;
 }
