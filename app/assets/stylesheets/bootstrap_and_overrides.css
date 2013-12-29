@@ -8,9 +8,10 @@ To use Glyphicons sprites instead of Font Awesome, replace with "require twitter
 
 body {
   background-color: #e1713b;
-  margin: 0;
+  margin: 0 0 20px;
   padding-left: 0;
   padding-right: 0;
+  color: #fff;
 }
 
 .hidden{
