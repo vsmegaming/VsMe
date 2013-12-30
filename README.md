@@ -6,7 +6,7 @@ Standard rails app setup
 (assuming you have ruby installed on your machine)
 
 ```bash
-git clone git@github.com:vsmegaming/VSMe.git
+git clone git@github.com:vsmegaming/VsMe.git
 gem install bundler
 bundle
 rake db:setup
