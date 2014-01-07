@@ -30,13 +30,28 @@ window.onload = function(){
 	    this.height = height;
 	    this.right = x + width;
 	    this.bottom = y + height;
+	    this.active = false;
 	}
 
 	function createTouchAreas() {
-	    leftArea = new Rectangle(0, 0, w/4, h);
-	    rightArea = new Rectangle(3*w/4, 0, w/4, h);
-	    upArea = new Rectangle(w/4, 0, w/2, h/2);
-	    downArea = new Rectangle(w/4, w/2, w/2, h/2);
+	    leftArea = new Rectangle(0, 0, w/2, h);
+	    rightArea = new Rectangle(w/2, 0, w/2, h);
+	    upArea = new Rectangle(0, 0, w, h/2);
+	    downArea = new Rectangle(0, h/2, w, h/2);
+	}
+
+	function setTouchAreas() {
+	    if (prevDir == "left" || prevDir == "right") {
+		leftArea.active = false;
+		rightArea.active = false;
+		upArea.active = true;
+		downArea.active = true;
+	    } else {
+		leftArea.active = true;
+		rightArea.active = true;
+		upArea.active = false;
+		downArea.active = false;
+	    }
 	}
 	
 	//Lets create the snake now
@@ -54,6 +69,7 @@ window.onload = function(){
 	    create_snake();
 	    create_food(); //Now we can see the food particle
 	    createTouchAreas();
+	    setTouchAreas();
 	    //finally lets display the score
 	    score = 0;
 
@@ -96,14 +112,23 @@ window.onload = function(){
 		ctx.strokeRect(0, 0, w, h);
 
 		//Touch areas
-		ctx.strokeStyle = "#eee";
-		ctx.strokeRect(leftArea.left, leftArea.top, leftArea.width, leftArea.height);
-		ctx.strokeStyle = "#eee";
-		ctx.strokeRect(rightArea.left, rightArea.top, rightArea.width, rightArea.height);
-		ctx.strokeStyle = "#eee";
-		ctx.strokeRect(upArea.left, upArea.top, upArea.width, upArea.height);
-		ctx.strokeStyle = "#eee";
-		ctx.strokeRect(downArea.left, downArea.top, downArea.width, downArea.height);
+		if (leftArea.active) {
+		    ctx.strokeStyle = "#eee";
+		    ctx.strokeRect(leftArea.left, leftArea.top, leftArea.width, leftArea.height);
+		}
+		if (rightArea.active) {
+		    ctx.strokeStyle = "#eee";
+		    ctx.strokeRect(rightArea.left, rightArea.top, rightArea.width, rightArea.height);
+		}
+		if (upArea.active) {
+		    ctx.strokeStyle = "#eee";
+		    ctx.strokeRect(upArea.left, upArea.top, upArea.width, upArea.height);
+		}
+		if (downArea.active) {
+		    ctx.strokeStyle = "#eee";
+		    ctx.strokeRect(downArea.left, downArea.top, downArea.width, downArea.height);
+		}
+
 		//The movement code for the snake to come here.
 		//Pop out the tail cell and place it infront of the head cell
 		var nx = snake_array[0].x;
@@ -117,6 +142,7 @@ window.onload = function(){
 		else if(dir == "down") ny++;
 
 		prevDir = dir;
+		setTouchAreas();
 
 		//Lets add the game over clauses now
 		//This will end the game if the snake hits the wall
@@ -232,7 +258,10 @@ window.onload = function(){
 	}
 
 	function checkTouchArea(x, y, rect) {
-	    if (x > rect.left && x < rect.right && y > rect.top && y < rect.bottom) return true;
+	    if (rect.active && x > rect.left && x < rect.right && y > rect.top && y < rect.bottom) {
+		return true;
+	    }
+	    return false;
 	}
 
 	function changeDirLeft() {
