@@ -1,10 +1,18 @@
 /*
-  =require twitter-bootstrap-static/bootstrap
+=require twitter-bootstrap-static/bootstrap
 
-  Use Font Awesome icons (default)
-  To use Glyphicons sprites instead of Font Awesome, replace with "require twitter-bootstrap-static/sprites"
-  =require twitter-bootstrap-static/fontawesome
-  */
+Use Font Awesome icons (default)
+To use Glyphicons sprites instead of Font Awesome, replace with "require twitter-bootstrap-static/sprites"
+=require twitter-bootstrap-static/fontawesome
+ */
+
+body {
+  background-color: #e1713b;
+  margin: 0 0 20px;
+  padding-left: 0;
+  padding-right: 0;
+  color: #fff;
+}
 
 .hidden{
   display: none;
@@ -44,4 +52,57 @@
   padding: 10px;
   margin-left: 10px;
   margin-right: 10px;
+}
+
+.sign-in-logo {
+  text-indent:-9999px;
+  background-image: url("logo.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 150px 150px;
+  height:150px;
+}
+
+.sign-in-center {
+  text-align: center;
+  width: 220px;
+  margin: auto;
+}
+
+.btn-sign-in {
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.428571429;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  color: #fff;
+  background-color: #27c6af;
+  border-color: #27c6af;
+  width: 200px;
+}
+
+.sign-in-links {
+  color: #b3b3b3;
+}
+
+.container {
+  margin: 20px 20px;
+}
+
+.navbar-inner {
+  border-radius: 0;
+  -webkit-border-radius: 0;
+  border: none;
 }
