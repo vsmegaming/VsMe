@@ -14,13 +14,37 @@ window.onload = function(){
 	var food;
 	var score;
 
+	//Debug
+	var debugText;
+
+	//Touch areas
+	var leftArea, rightArea, upArea, downArea;
+
 	var gameOver;
 
+	//Object for touch areas
+	function Rectangle(x, y, width, height) {
+	    this.left = x;
+	    this.top = y;
+	    this.width = width;
+	    this.height = height;
+	    this.right = x + width;
+	    this.bottom = y + height;
+	}
+
+	function createTouchAreas() {
+	    leftArea = new Rectangle(0, 0, w/4, h);
+	    rightArea = new Rectangle(3*w/4, 0, w/4, h);
+	    upArea = new Rectangle(w/4, 0, w/2, h/2);
+	    downArea = new Rectangle(w/4, w/2, w/2, h/2);
+	}
+	
 	//Lets create the snake now
 	var snake_array; //an array of cells to make up the snake
 
 	$("#start").on("click", function(){
 	    playGame();
+	    $("#start").addClass("hidden"); //so user cannot reset game
 	});
 
 	function playGame()
@@ -29,6 +53,7 @@ window.onload = function(){
 	    prevDir = "right";
 	    create_snake();
 	    create_food(); //Now we can see the food particle
+	    createTouchAreas();
 	    //finally lets display the score
 	    score = 0;
 
@@ -70,6 +95,15 @@ window.onload = function(){
 		ctx.strokeStyle = "black";
 		ctx.strokeRect(0, 0, w, h);
 
+		//Touch areas
+		ctx.strokeStyle = "#eee";
+		ctx.strokeRect(leftArea.left, leftArea.top, leftArea.width, leftArea.height);
+		ctx.strokeStyle = "#eee";
+		ctx.strokeRect(rightArea.left, rightArea.top, rightArea.width, rightArea.height);
+		ctx.strokeStyle = "#eee";
+		ctx.strokeRect(upArea.left, upArea.top, upArea.width, upArea.height);
+		ctx.strokeStyle = "#eee";
+		ctx.strokeRect(downArea.left, downArea.top, downArea.width, downArea.height);
 		//The movement code for the snake to come here.
 		//Pop out the tail cell and place it infront of the head cell
 		var nx = snake_array[0].x;
@@ -77,15 +111,10 @@ window.onload = function(){
 		//These were the position of the head cell.
 		//We will increment it to get the new head position
 		//Lets add proper direction based movement now
-		if(dir == "right") {
-		    nx++;
-		} else if(dir == "left") {
-		    nx--;
-		} else if(dir == "up") {
-		    ny--;
-		} else if(dir == "down") {
-		    ny++;
-		}
+		if(dir == "right") nx++;
+		else if(dir == "left") nx--;
+		else if(dir == "up") ny--;
+		else if(dir == "down") ny++;
 
 		prevDir = dir;
 
@@ -131,6 +160,7 @@ window.onload = function(){
 		//Lets paint the score
 		var score_text = "Score: " + score;
 		ctx.fillText(score_text, 5, h-5);
+		//ctx.fillText(debugText, 5, h-16);
 	    }
 	}
 
@@ -163,27 +193,63 @@ window.onload = function(){
 	$(document).keydown(function(e){
 	    var key = e.which;
 	    //We will add another clause to prevent reverse gear
-	    if(key == "37" && prevDir != "right") dir = "left";
-	    else if(key == "38" && prevDir != "down") dir = "up";
-	    else if(key == "39" && prevDir != "left") dir = "right";
-	    else if(key == "40" && prevDir != "up") dir = "down";
+	    if(key == "37") changeDirLeft();
+	    else if(key == "38") changeDirUp();
+	    else if(key == "39") changeDirRight();
+	    else if(key == "40") changeDirDown();
 	})
 
 	$("#left").on("click", function(){
-	    if(prevDir != "right") dir = "left";
+	    changeDirLeft();
 	});
 
 	$("#right").on("click", function(){
-	    if(prevDir != "left") dir = "right";
+	    changeDirRight();
 	});
 
 	$("#up").on("click", function(){
-	    if(prevDir != "down") dir = "up";
+	    changeDirUp();
 	});
 
 	$("#down").on("click", function(){
-	    if(prevDir != "up") dir = "down";
+	    changeDirDown();
 	});
+
+	canvas.addEventListener('touchstart', function(e){
+	    var rect = canvas.getBoundingClientRect();
+	    var touchobj = e.changedTouches[0];
+	    var x = touchobj.pageX - rect.left;
+	    var y = touchobj.pageY - rect.top;
+	    debugText = x + ", " + y;
+	    handleTouch(x, y);
+	}, false);
+
+	function handleTouch(x, y) {
+	    if (checkTouchArea(x, y, leftArea)) changeDirLeft();
+	    else if (checkTouchArea(x, y, rightArea)) changeDirRight();
+	    else if (checkTouchArea(x, y, upArea)) changeDirUp();
+	    else if (checkTouchArea(x, y, downArea)) changeDirDown();
+	}
+
+	function checkTouchArea(x, y, rect) {
+	    if (x > rect.left && x < rect.right && y > rect.top && y < rect.bottom) return true;
+	}
+
+	function changeDirLeft() {
+	    if (prevDir != "right") dir = "left";
+	}
+
+	function changeDirRight() {
+	    if (prevDir != "left") dir = "right";
+	}
+
+	function changeDirUp() {
+	    if (prevDir != "down") dir = "up";
+	}
+
+	function changeDirDown() {
+	    if (prevDir != "up") dir = "down";
+	}
     }
 
 }
