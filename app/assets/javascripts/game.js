@@ -225,22 +225,6 @@ window.onload = function(){
 	    else if(key == "40") changeDirDown();
 	})
 
-	$("#left").on("click", function(){
-	    changeDirLeft();
-	});
-
-	$("#right").on("click", function(){
-	    changeDirRight();
-	});
-
-	$("#up").on("click", function(){
-	    changeDirUp();
-	});
-
-	$("#down").on("click", function(){
-	    changeDirDown();
-	});
-
 	canvas.addEventListener('touchstart', function(e){
 	    var rect = canvas.getBoundingClientRect();
 	    var touchobj = e.changedTouches[0];
