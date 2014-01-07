@@ -14,13 +14,52 @@ window.onload = function(){
 	var food;
 	var score;
 
+	//Debug
+	var debugText;
+
+	//Touch areas
+	var leftArea, rightArea, upArea, downArea;
+
 	var gameOver;
 
+	//Object for touch areas
+	function Rectangle(x, y, width, height) {
+	    this.left = x;
+	    this.top = y;
+	    this.width = width;
+	    this.height = height;
+	    this.right = x + width;
+	    this.bottom = y + height;
+	    this.active = false;
+	}
+
+	function createTouchAreas() {
+	    leftArea = new Rectangle(0, 0, w/2, h);
+	    rightArea = new Rectangle(w/2, 0, w/2, h);
+	    upArea = new Rectangle(0, 0, w, h/2);
+	    downArea = new Rectangle(0, h/2, w, h/2);
+	}
+
+	function setTouchAreas() {
+	    if (prevDir == "left" || prevDir == "right") {
+		leftArea.active = false;
+		rightArea.active = false;
+		upArea.active = true;
+		downArea.active = true;
+	    } else {
+		leftArea.active = true;
+		rightArea.active = true;
+		upArea.active = false;
+		downArea.active = false;
+	    }
+	}
+	
 	//Lets create the snake now
 	var snake_array; //an array of cells to make up the snake
 
 	$("#start").on("click", function(){
 	    playGame();
+	    $("#start").addClass("hidden"); //so user cannot reset game
 	});
 
 	function playGame()
@@ -29,6 +68,8 @@ window.onload = function(){
 	    prevDir = "right";
 	    create_snake();
 	    create_food(); //Now we can see the food particle
+	    createTouchAreas();
+	    setTouchAreas();
 	    //finally lets display the score
 	    score = 0;
 
@@ -70,6 +111,24 @@ window.onload = function(){
 		ctx.strokeStyle = "black";
 		ctx.strokeRect(0, 0, w, h);
 
+		//Touch areas
+		if (leftArea.active) {
+		    ctx.strokeStyle = "#eee";
+		    ctx.strokeRect(leftArea.left, leftArea.top, leftArea.width, leftArea.height);
+		}
+		if (rightArea.active) {
+		    ctx.strokeStyle = "#eee";
+		    ctx.strokeRect(rightArea.left, rightArea.top, rightArea.width, rightArea.height);
+		}
+		if (upArea.active) {
+		    ctx.strokeStyle = "#eee";
+		    ctx.strokeRect(upArea.left, upArea.top, upArea.width, upArea.height);
+		}
+		if (downArea.active) {
+		    ctx.strokeStyle = "#eee";
+		    ctx.strokeRect(downArea.left, downArea.top, downArea.width, downArea.height);
+		}
+
 		//The movement code for the snake to come here.
 		//Pop out the tail cell and place it infront of the head cell
 		var nx = snake_array[0].x;
@@ -77,17 +136,13 @@ window.onload = function(){
 		//These were the position of the head cell.
 		//We will increment it to get the new head position
 		//Lets add proper direction based movement now
-		if(dir == "right") {
-		    nx++;
-		} else if(dir == "left") {
-		    nx--;
-		} else if(dir == "up") {
-		    ny--;
-		} else if(dir == "down") {
-		    ny++;
-		}
+		if(dir == "right") nx++;
+		else if(dir == "left") nx--;
+		else if(dir == "up") ny--;
+		else if(dir == "down") ny++;
 
 		prevDir = dir;
+		setTouchAreas();
 
 		//Lets add the game over clauses now
 		//This will end the game if the snake hits the wall
@@ -131,6 +186,7 @@ window.onload = function(){
 		//Lets paint the score
 		var score_text = "Score: " + score;
 		ctx.fillText(score_text, 5, h-5);
+		//ctx.fillText(debugText, 5, h-16);
 	    }
 	}
 
@@ -163,27 +219,50 @@ window.onload = function(){
 	$(document).keydown(function(e){
 	    var key = e.which;
 	    //We will add another clause to prevent reverse gear
-	    if(key == "37" && prevDir != "right") dir = "left";
-	    else if(key == "38" && prevDir != "down") dir = "up";
-	    else if(key == "39" && prevDir != "left") dir = "right";
-	    else if(key == "40" && prevDir != "up") dir = "down";
+	    if(key == "37") changeDirLeft();
+	    else if(key == "38") changeDirUp();
+	    else if(key == "39") changeDirRight();
+	    else if(key == "40") changeDirDown();
 	})
 
-	$("#left").on("click", function(){
-	    if(prevDir != "right") dir = "left";
-	});
+	canvas.addEventListener('touchstart', function(e){
+	    var rect = canvas.getBoundingClientRect();
+	    var touchobj = e.changedTouches[0];
+	    var x = touchobj.pageX - rect.left;
+	    var y = touchobj.pageY - rect.top;
+	    debugText = x + ", " + y;
+	    handleTouch(x, y);
+	}, false);
 
-	$("#right").on("click", function(){
-	    if(prevDir != "left") dir = "right";
-	});
+	function handleTouch(x, y) {
+	    if (checkTouchArea(x, y, leftArea)) changeDirLeft();
+	    else if (checkTouchArea(x, y, rightArea)) changeDirRight();
+	    else if (checkTouchArea(x, y, upArea)) changeDirUp();
+	    else if (checkTouchArea(x, y, downArea)) changeDirDown();
+	}
 
-	$("#up").on("click", function(){
-	    if(prevDir != "down") dir = "up";
-	});
+	function checkTouchArea(x, y, rect) {
+	    if (rect.active && x > rect.left && x < rect.right && y > rect.top && y < rect.bottom) {
+		return true;
+	    }
+	    return false;
+	}
 
-	$("#down").on("click", function(){
-	    if(prevDir != "up") dir = "down";
-	});
+	function changeDirLeft() {
+	    if (prevDir != "right") dir = "left";
+	}
+
+	function changeDirRight() {
+	    if (prevDir != "left") dir = "right";
+	}
+
+	function changeDirUp() {
+	    if (prevDir != "down") dir = "up";
+	}
+
+	function changeDirDown() {
+	    if (prevDir != "up") dir = "down";
+	}
     }
 
 }
