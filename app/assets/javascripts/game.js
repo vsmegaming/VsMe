@@ -4,8 +4,20 @@ window.onload = function(){
 	//Canvas stuff
 	var canvas = $("#canvas")[0];
 	var ctx = canvas.getContext("2d");
-	var w = $("#canvas").width();
-	var h = $("#canvas").height();
+
+	//Game dimensions
+	//Keep w and h divisible by 5
+	var w = 225;
+	var h = 225;
+
+	//Canvas element dimensions
+	var canvasWidth = $("#canvas").width();
+	var canvasHeight = $("#canvas").height();
+
+	var scaleX = canvasWidth/w;
+	var scaleY = canvasHeight/h;
+	//Set drawing scale for the rest of the program
+	ctx.scale(scaleX, scaleY);
 
 	//Lets save the cell width in a variable for easy control
 	var cw = 5;
@@ -21,6 +33,7 @@ window.onload = function(){
 	var leftArea, rightArea, upArea, downArea;
 
 	var gameOver;
+	var gameStarted = false;
 
 	//Object for touch areas
 	function Rectangle(x, y, width, height) {
@@ -34,10 +47,12 @@ window.onload = function(){
 	}
 
 	function createTouchAreas() {
-	    leftArea = new Rectangle(0, 0, w/2, h);
-	    rightArea = new Rectangle(w/2, 0, w/2, h);
-	    upArea = new Rectangle(0, 0, w, h/2);
-	    downArea = new Rectangle(0, h/2, w, h/2);
+	    //Touch areas must be exact, input does not scale with drawing
+	    leftArea = new Rectangle(0, 0, w*scaleX/2, h*scaleY);
+	    rightArea = new Rectangle(w*scaleX/2, 0, w*scaleX/2, h*scaleY);
+	    upArea = new Rectangle(0, 0, w*scaleX, h*scaleY/2);
+	    downArea = new Rectangle(0, h*scaleY/2, w*scaleX, h*scaleY/2);
+	    
 	}
 
 	function setTouchAreas() {
@@ -74,6 +89,8 @@ window.onload = function(){
 	    score = 0;
 
 	    gameOver = false;
+	    window.scrollTo(0, 0); //Position screen
+	    gameStarted = true;
 
 	    //Lets move the snake now using a timer which will trigger the paint function
 	    //every 60ms
@@ -112,22 +129,7 @@ window.onload = function(){
 		ctx.strokeRect(0, 0, w, h);
 
 		//Touch areas
-		if (leftArea.active) {
-		    ctx.strokeStyle = "#eee";
-		    ctx.strokeRect(leftArea.left, leftArea.top, leftArea.width, leftArea.height);
-		}
-		if (rightArea.active) {
-		    ctx.strokeStyle = "#eee";
-		    ctx.strokeRect(rightArea.left, rightArea.top, rightArea.width, rightArea.height);
-		}
-		if (upArea.active) {
-		    ctx.strokeStyle = "#eee";
-		    ctx.strokeRect(upArea.left, upArea.top, upArea.width, upArea.height);
-		}
-		if (downArea.active) {
-		    ctx.strokeStyle = "#eee";
-		    ctx.strokeRect(downArea.left, downArea.top, downArea.width, downArea.height);
-		}
+		paintTouchAreas();
 
 		//The movement code for the snake to come here.
 		//Pop out the tail cell and place it infront of the head cell
@@ -199,6 +201,23 @@ window.onload = function(){
 	    ctx.strokeRect(x*cw, y*cw, cw, cw);
 	}
 
+	function paintTouchAreas() {
+	    //Rescale to draw the touch areas exactly
+	    ctx.scale(1/scaleX, 1/scaleY);
+	    paintTouchArea(leftArea);
+	    paintTouchArea(rightArea);
+	    paintTouchArea(upArea);
+	    paintTouchArea(downArea);
+	    ctx.scale(scaleX, scaleY);
+	}
+
+	function paintTouchArea(rect) {
+	    if (rect.active) {
+		ctx.strokeStyle = "#eee";
+		ctx.strokeRect(rect.left, rect.top, rect.width, rect.height);
+	    }
+	}
+
 	function check_collision(x, y, array)
 	{
 	    //This function will check if the provided x/y coordinates exist
@@ -225,7 +244,12 @@ window.onload = function(){
 	    else if(key == "40") changeDirDown();
 	})
 
+	window.addEventListener('touchmove', function(e) {
+	    if (gameStarted) e.preventDefault(); //To prevent swipe scrolling once game has begun
+	}, false);
+
 	canvas.addEventListener('touchstart', function(e){
+	    if (gameStarted) e.preventDefault(); //To prevent long taps on canvas bringing up context menu
 	    var rect = canvas.getBoundingClientRect();
 	    var touchobj = e.changedTouches[0];
 	    var x = touchobj.pageX - rect.left;
@@ -266,4 +290,3 @@ window.onload = function(){
     }
 
 }
-
