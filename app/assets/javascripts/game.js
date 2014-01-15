@@ -1,6 +1,9 @@
 window.onload = function(){
 
     if ($(".game").is("*")){
+	//Debug
+	var debugText;
+
 	//Canvas stuff
 	var canvas = $("#canvas")[0];
 	var ctx = canvas.getContext("2d");
@@ -13,11 +16,13 @@ window.onload = function(){
 	//Canvas element dimensions
 	var canvasWidth = $("#canvas").width();
 	var canvasHeight = $("#canvas").height();
+	debugText = canvasWidth + ", " + canvasHeight;
+
+	canvas.setAttribute('width', parseInt($("#canvas").css('width')));
+	canvas.setAttribute('height', parseInt($("#canvas").css('height')));
 
 	var scaleX = canvasWidth/w;
 	var scaleY = canvasHeight/h;
-	//Set drawing scale for the rest of the program
-	ctx.scale(scaleX, scaleY);
 
 	//Lets save the cell width in a variable for easy control
 	var cw = 5;
@@ -25,9 +30,6 @@ window.onload = function(){
 	var prevDir;
 	var food;
 	var score;
-
-	//Debug
-	var debugText;
 
 	//Touch areas
 	var leftArea, rightArea, upArea, downArea;
@@ -47,11 +49,11 @@ window.onload = function(){
 	}
 
 	function createTouchAreas() {
-	    //Touch areas must be exact, input does not scale with drawing
-	    leftArea = new Rectangle(0, 0, w*scaleX/2, h*scaleY);
-	    rightArea = new Rectangle(w*scaleX/2, 0, w*scaleX/2, h*scaleY);
-	    upArea = new Rectangle(0, 0, w*scaleX, h*scaleY/2);
-	    downArea = new Rectangle(0, h*scaleY/2, w*scaleX, h*scaleY/2);
+
+	    leftArea = new Rectangle(0, 0, canvasWidth/2, canvasHeight);
+	    rightArea = new Rectangle(canvasWidth/2, 0, canvasWidth/2, canvasHeight);
+	    upArea = new Rectangle(0, 0, canvasWidth, canvasHeight/2);
+	    downArea = new Rectangle(0, canvasHeight/2, canvasWidth, canvasHeight/2);
 	    
 	}
 
@@ -89,7 +91,7 @@ window.onload = function(){
 	    score = 0;
 
 	    gameOver = false;
-	    window.scrollTo(0, 0); //Position screen
+	    window.scrollTo(0, 1); //Position screen
 	    gameStarted = true;
 
 	    //Lets move the snake now using a timer which will trigger the paint function
@@ -124,9 +126,9 @@ window.onload = function(){
 	    if (!gameOver) {
 		//To avoid the snake trail we need to paint the BG on every frame
 		ctx.fillStyle = "white";
-		ctx.fillRect(0, 0, w, h);
+		ctx.fillRect(0, 0, canvasWidth, canvasHeight);
 		ctx.strokeStyle = "black";
-		ctx.strokeRect(0, 0, w, h);
+		ctx.strokeRect(0, 0, canvasWidth, canvasHeight);
 
 		//Touch areas
 		paintTouchAreas();
@@ -187,8 +189,8 @@ window.onload = function(){
 		paint_cell(food.x, food.y);
 		//Lets paint the score
 		var score_text = "Score: " + score;
-		ctx.fillText(score_text, 5, h-5);
-		//ctx.fillText(debugText, 5, h-16);
+		ctx.fillText(score_text, 5, canvasHeight-5);
+		//ctx.fillText(debugText, 5, canvasHeight-16);
 	    }
 	}
 
@@ -196,19 +198,16 @@ window.onload = function(){
 	function paint_cell(x, y)
 	{
 	    ctx.fillStyle = "blue";
-	    ctx.fillRect(x*cw, y*cw, cw, cw);
+	    ctx.fillRect(x*cw*scaleX, y*cw*scaleY, cw*scaleX, cw*scaleY);
 	    ctx.strokeStyle = "white";
-	    ctx.strokeRect(x*cw, y*cw, cw, cw);
+	    ctx.strokeRect(x*cw*scaleX, y*cw*scaleY, cw*scaleX, cw*scaleY);
 	}
 
 	function paintTouchAreas() {
-	    //Rescale to draw the touch areas exactly
-	    ctx.scale(1/scaleX, 1/scaleY);
 	    paintTouchArea(leftArea);
 	    paintTouchArea(rightArea);
 	    paintTouchArea(upArea);
 	    paintTouchArea(downArea);
-	    ctx.scale(scaleX, scaleY);
 	}
 
 	function paintTouchArea(rect) {
@@ -254,7 +253,7 @@ window.onload = function(){
 	    var touchobj = e.changedTouches[0];
 	    var x = touchobj.pageX - rect.left;
 	    var y = touchobj.pageY - rect.top;
-	    debugText = x + ", " + y;
+	    //debugText = x + ", " + y;
 	    handleTouch(x, y);
 	}, false);
 
