@@ -8,24 +8,39 @@ window.onload = function(){
 	var canvas = $("#canvas")[0];
 	var ctx = canvas.getContext("2d");
 
-	//Game dimensions
-	//Keep w and h divisible by 5
-	var w = 225;
-	var h = 225;
-
-	//Canvas element dimensions
-	var canvasWidth = $("#canvas").width();
-	var canvasHeight = $("#canvas").height();
-	debugText = canvasWidth + ", " + canvasHeight;
-
-	canvas.setAttribute('width', parseInt($("#canvas").css('width')));
-	canvas.setAttribute('height', parseInt($("#canvas").css('height')));
-
-	var scaleX = canvasWidth/w;
-	var scaleY = canvasHeight/h;
-
 	//Lets save the cell width in a variable for easy control
 	var cw = 5;
+
+	//Game dimensions
+	var gridWidth = 45;
+	var gridHeight = 45;
+	var w = gridWidth * cw;
+	var h = gridHeight * cw;
+	var widthToHeight = w/h;
+
+
+	var canvasWidth, canvasHeight, scaleX, scaleY;
+
+	function resizeGame() {
+	    resizeCanvas();
+	    createTouchAreas();
+	}
+
+	function resizeCanvas() {
+	    //Canvas element dimensions
+	    canvasWidth = $("#canvas").width();
+	    canvasHeight = canvasWidth/widthToHeight;
+	    $("#canvas").css('height', canvasHeight);
+	    debugText = canvasWidth + ", " + canvasHeight;
+
+	    //Set the canvas width and height equal to CSS width and height
+	    canvas.setAttribute('width', canvasWidth);
+	    canvas.setAttribute('height', canvasHeight);
+
+	    scaleX = canvasWidth/w;
+	    scaleY = canvasHeight/h;
+	}
+
 	var dir;
 	var prevDir;
 	var food;
@@ -49,12 +64,10 @@ window.onload = function(){
 	}
 
 	function createTouchAreas() {
-
 	    leftArea = new Rectangle(0, 0, canvasWidth/2, canvasHeight);
 	    rightArea = new Rectangle(canvasWidth/2, 0, canvasWidth/2, canvasHeight);
 	    upArea = new Rectangle(0, 0, canvasWidth, canvasHeight/2);
 	    downArea = new Rectangle(0, canvasHeight/2, canvasWidth, canvasHeight/2);
-	    
 	}
 
 	function setTouchAreas() {
@@ -85,7 +98,7 @@ window.onload = function(){
 	    prevDir = "right";
 	    create_snake();
 	    create_food(); //Now we can see the food particle
-	    createTouchAreas();
+	    resizeGame();
 	    setTouchAreas();
 	    //finally lets display the score
 	    score = 0;
@@ -118,7 +131,7 @@ window.onload = function(){
 		y: Math.round(Math.random()*(h-cw)/cw), 
 	    };
 	    //This will create a cell with x/y between 0-44
-	    //Because there are 45(450/10) positions accross the rows and columns
+	    //Because there are 45(225/5) positions accross the rows and columns
 	}
 
 	function paint()
@@ -127,8 +140,6 @@ window.onload = function(){
 		//To avoid the snake trail we need to paint the BG on every frame
 		ctx.fillStyle = "white";
 		ctx.fillRect(0, 0, canvasWidth, canvasHeight);
-		ctx.strokeStyle = "black";
-		ctx.strokeRect(0, 0, canvasWidth, canvasHeight);
 
 		//Touch areas
 		paintTouchAreas();
@@ -175,7 +186,6 @@ window.onload = function(){
 		    tail.x = nx; tail.y = ny;
 		}
 		//The snake can now eat the food.
-
 		snake_array.unshift(tail); //puts back the tail as the first cell
 
 		for(var i = 0; i < snake_array.length; i++)
@@ -187,9 +197,17 @@ window.onload = function(){
 
 		//Lets paint the food
 		paint_cell(food.x, food.y);
+
+		//Border
+		ctx.strokeStyle = "black";
+		ctx.strokeRect(0, 0, canvasWidth, canvasHeight);
+
 		//Lets paint the score
 		var score_text = "Score: " + score;
-		ctx.fillText(score_text, 5, canvasHeight-5);
+		var fontSize = 12*scaleX;
+		ctx.font = "normal " + fontSize + "px monospace";
+		ctx.fillStyle = "black";
+		ctx.fillText(score_text, 8*scaleX, canvasHeight - 8*scaleY);
 		//ctx.fillText(debugText, 5, canvasHeight-16);
 	    }
 	}
@@ -237,11 +255,22 @@ window.onload = function(){
 	$(document).keydown(function(e){
 	    var key = e.which;
 	    //We will add another clause to prevent reverse gear
-	    if(key == "37") changeDirLeft();
-	    else if(key == "38") changeDirUp();
-	    else if(key == "39") changeDirRight();
-	    else if(key == "40") changeDirDown();
+	    if(key == "37") {
+		e.preventDefault();
+		changeDirLeft();
+	    } else if(key == "38") {
+		e.preventDefault();
+		changeDirUp();
+	    } else if(key == "39") {
+		e.preventDefault();
+		changeDirRight();
+	    } else if(key == "40") {
+		e.preventDefault();
+		changeDirDown();
+	    }
 	})
+
+	window.addEventListener('resize', resizeGame, false);
 
 	window.addEventListener('touchmove', function(e) {
 	    if (gameStarted) e.preventDefault(); //To prevent swipe scrolling once game has begun
