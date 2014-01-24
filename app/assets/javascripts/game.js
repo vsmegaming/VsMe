@@ -18,7 +18,6 @@ window.onload = function(){
 	var h = gridHeight * cw;
 	var widthToHeight = w/h;
 
-
 	var canvasWidth, canvasHeight, scaleX, scaleY;
 
 	function resizeGame() {
@@ -127,11 +126,11 @@ window.onload = function(){
 	function create_food()
 	{
 	    food = {
-		x: Math.round(Math.random()*(w-cw)/cw), 
-		y: Math.round(Math.random()*(h-cw)/cw), 
+		x: Math.round(Math.random()*(w-3*cw)/cw) + 1, 
+		y: Math.round(Math.random()*(h-3*cw)/cw) + 1, 
 	    };
-	    //This will create a cell with x/y between 0-44
-	    //Because there are 45(225/5) positions accross the rows and columns
+	    //This will create a cell with x/y between 1-43
+	    //The cell will never lie on the border (positions 0 and 44)
 	}
 
 	function paint()
