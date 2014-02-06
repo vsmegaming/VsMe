@@ -251,24 +251,6 @@ window.onload = function(){
 	    $('#new_game').submit();
 	}
 
-	$(document).keydown(function(e){
-	    var key = e.which;
-	    //We will add another clause to prevent reverse gear
-	    if(key == "37") {
-		e.preventDefault();
-		changeDirLeft();
-	    } else if(key == "38") {
-		e.preventDefault();
-		changeDirUp();
-	    } else if(key == "39") {
-		e.preventDefault();
-		changeDirRight();
-	    } else if(key == "40") {
-		e.preventDefault();
-		changeDirDown();
-	    }
-	})
-
 	window.addEventListener('resize', resizeGame, false);
 
 	window.addEventListener('touchmove', function(e) {
