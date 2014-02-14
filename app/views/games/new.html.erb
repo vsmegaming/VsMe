@@ -31,7 +31,7 @@
   }
 
   #time-div, #user-div, #credits-div {
-  padding: 2px 4px;
+  padding: 8px 4px;
   }
 
   #time-div {
@@ -62,9 +62,9 @@
   </div>-->
   <table class='hud-group'>
     <tr>
-      <td><div id='time-div'><span id='time'>0:00</span></div></td>
-      <td><div id='user-div'><%= current_user.email %></div></td>
-      <td><div id='credits-div'><%= current_user.credits %></div></td>
+      <td><div id='time-div'><span class='glyphicon glyphicon-time'></span><br><span id='time'>0:00</span></div></td>
+      <td><div id='user-div'><span class='glyphicon glyphicon-user'></span><br><%= current_user.email %></div></td>
+      <td><div id='credits-div'><span class='glyphicon glyphicon-usd'></span><br><%= current_user.credits %></div></td>
     </tr>
   </table>
 </div>

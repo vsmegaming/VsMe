@@ -231,7 +231,7 @@ window.onload = function(){
 	//Lets first create a generic function to paint cells
 	function paint_cell(x, y)
 	{
-	    ctx.fillStyle = "blue";
+	    ctx.fillStyle = "#0c9";
 	    ctx.fillRect(x*cw*scaleX, y*cw*scaleY, cw*scaleX, cw*scaleY);
 	    ctx.strokeStyle = "white";
 	    ctx.strokeRect(x*cw*scaleX, y*cw*scaleY, cw*scaleX, cw*scaleY);
