@@ -6,11 +6,46 @@
 </div>
 
 <style>
+
+  #score-div {
+
+  }
+
   #canvas {
-  max-width: 500px;
+  max-width: 400px;
   min-width: 225px;
   width: 100%;
   }
+
+  .hud-group {
+  margin: auto;
+  max-width: 400px;
+  min-width: 225px;
+  width: 100%;
+  }
+
+  .hud-group td {
+  overflow: hidden;
+  padding: 0;
+  text-align: center;
+  }
+
+  #time-div, #user-div, #credits-div {
+  padding: 2px 4px;
+  }
+
+  #time-div {
+  background-color: #09c;
+  }
+
+  #user-div {
+  background-color: #f60;
+  }
+
+  #credits-div {
+  background-color: #0c9;
+  }
+
 </style>
 
 <div>
@@ -18,5 +53,18 @@
 </div>
 
 <div class="game">
+  <div id='score-div'><span id='score'></span></div>
   <canvas id='canvas'></canvas>
+  <!--<div class='hud-group'>
+    <div id='time-div'><span id='time'></span></div>
+    <div id='user-div'><%= current_user.email %></div>
+    <div id='credits-div'><%= current_user.credits %></div>
+  </div>-->
+  <table class='hud-group'>
+    <tr>
+      <td><div id='time-div'><span id='time'>0:00</span></div></td>
+      <td><div id='user-div'><%= current_user.email %></div></td>
+      <td><div id='credits-div'><%= current_user.credits %></div></td>
+    </tr>
+  </table>
 </div>
