@@ -91,7 +91,9 @@ window.onload = function(){
 
 	$("#start").on("click", function(){
 	    playGame();
-	    $("#start").addClass("hidden"); //so user cannot reset game
+	    //$("#start").addClass("hidden"); //so user cannot reset game
+	    $("#start").remove();
+	    $(".navbar").remove();
 	});
 
 	function playGame()
@@ -214,18 +216,22 @@ window.onload = function(){
 		var fontSize = 12*scaleX;
 		ctx.font = "normal " + fontSize + "px monospace";
 		ctx.fillStyle = "black";
-		ctx.fillText(score_text, 8*scaleX, canvasHeight - 8*scaleY);
+		//ctx.fillText(score_text, 8*scaleX, canvasHeight - 8*scaleY);
 		//ctx.fillText(debugText, 5, canvasHeight-16);
 
 		//Paint the time
-		displayTime();
+		var timeText = displayTime();
+
+		//Outside the canvas
+		$("#score").text(score_text);
+		$("#time").text(timeText);
 	    }
 	}
 
 	//Lets first create a generic function to paint cells
 	function paint_cell(x, y)
 	{
-	    ctx.fillStyle = "blue";
+	    ctx.fillStyle = "#0c9";
 	    ctx.fillRect(x*cw*scaleX, y*cw*scaleY, cw*scaleX, cw*scaleY);
 	    ctx.strokeStyle = "white";
 	    ctx.strokeRect(x*cw*scaleX, y*cw*scaleY, cw*scaleX, cw*scaleY);
@@ -254,7 +260,9 @@ window.onload = function(){
 	    var fontSize = 12*scaleX;
 	    ctx.font = "normal " + fontSize + "px monospace";
 	    ctx.fillStyle = "black";
-	    ctx.fillText(timeText, 5*canvasWidth/6, canvasHeight - 8*scaleY);
+	    //ctx.fillText(timeText, 5*canvasWidth/6, canvasHeight - 8*scaleY);
+
+	    return timeText;
 	}
 
 	function check_collision(x, y, array)
