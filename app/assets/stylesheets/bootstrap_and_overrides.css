@@ -14,6 +14,10 @@ body {
   color: #fff;
 }
 
+a {
+  color: #fff;
+}
+
 .hidden{
   display: none;
 }
@@ -72,7 +76,7 @@ body {
   margin: auto;
 }
 
-.btn-sign-in {
+.btn-main {
   padding: 6px 12px;
   margin-bottom: 0;
   font-size: 14px;
@@ -136,5 +140,5 @@ body {
 }
 
 .credits-div {
-    background-color: #0c9;
+    background-color: #27c6af;
 }

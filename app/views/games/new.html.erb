@@ -1,7 +1,7 @@
 <div class='hidden'>
   <%= form_for @game do |f| %>
     <%= f.number_field :score %>
-    <%= f.submit "Submit", class: "btn" %>
+    <%= f.submit "Submit" %>
   <% end %>
 </div>
 
@@ -9,7 +9,7 @@
   <% if current_user.credits <= 0 %>
     <h4>No Credits<h4>
   <% else %>
-    <button id='start' class="btn">Play Snake!</button>
+    <button id='start' class="btn-main">Play Snake!</button>
   <% end %>
 </div>
 

@@ -3,7 +3,7 @@
 
   <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
     <%= devise_error_messages! %>
-    <%= f.text_field :user_name, :autofocus => true, placeholder: "User Name" %>
+    <%= f.text_field :user_name, :autofocus => true, placeholder: "user name" %>
     <%= f.email_field :email, placeholder: "email address" %>
     <%= f.password_field :password, placeholder: "password" %>
     <%= f.password_field :password_confirmation, placeholder: "confirm password" %>
@@ -11,7 +11,7 @@
     <p>By clicking the Sign Up button you acknowledge that you
     are of age and reside in a state that allows skills gaming</p>
 
-    <%= f.submit "Sign up", class: "btn-sign-in" %>
+    <%= f.submit "Sign up", class: "btn-main" %>
 
   <% end %>
 
