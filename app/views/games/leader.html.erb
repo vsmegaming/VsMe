@@ -11,10 +11,10 @@
   </thead>
   <tbody>
     <% @leaders.each do |leader| %>
-    <tr>
-      <td><%= leader.email %></td>
-      <td><%= leader.wins %></td>
-    </tr>
+      <tr>
+        <td><%= leader.try(:user_name) || "(no name given)" %></td>
+        <td><%= leader.wins %></td>
+      </tr>
     <% end %>
   </tbody>
 </table>
