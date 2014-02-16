@@ -5,49 +5,6 @@
   <% end %>
 </div>
 
-<style>
-
-  #score-div {
-
-  }
-
-  #canvas {
-  max-width: 400px;
-  min-width: 225px;
-  width: 100%;
-  }
-
-  .hud-group {
-  margin: auto;
-  max-width: 400px;
-  min-width: 225px;
-  width: 100%;
-  }
-
-  .hud-group td {
-  overflow: hidden;
-  padding: 0;
-  text-align: center;
-  }
-
-  #time-div, #user-div, #credits-div {
-  padding: 8px 4px;
-  }
-
-  #time-div {
-  background-color: #09c;
-  }
-
-  #user-div {
-  background-color: #f60;
-  }
-
-  #credits-div {
-  background-color: #0c9;
-  }
-
-</style>
-
 <div class="sign-in-center">
   <% if current_user.credits <= 0 %>
     <h4>No Credits<h4>
@@ -57,13 +14,13 @@
 </div>
 
 <div class="game">
-  <div id='score-div'><span id='score'></span></div>
+  <div class='score-div'><span id='score'></span></div>
   <canvas id='canvas'></canvas>
   <table class='hud-group'>
     <tr>
-      <td><div id='time-div'><span class='glyphicon glyphicon-time'></span><br><span id='time'>0:00</span></div></td>
-      <td><div id='user-div'><span class='glyphicon glyphicon-user'></span><br><%= current_user.email %></div></td>
-      <td><div id='credits-div'><span class='glyphicon glyphicon-usd'></span><br><%= current_user.credits %></div></td>
+      <td><div class='time-div'><span class='glyphicon glyphicon-time'></span><br><span id='time'>0:00</span></div></td>
+      <td><div class='user-div'><span class='glyphicon glyphicon-user'></span><br><%= current_user.user_name %></div></td>
+      <td><div class='credits-div'><span class='glyphicon glyphicon-usd'></span><br><%= current_user.credits %></div></td>
     </tr>
   </table>
 </div>
