@@ -48,8 +48,12 @@
 
 </style>
 
-<div>
-  <button id='start' class="btn">Play Snake!</button>
+<div class="sign-in-center">
+  <% if current_user.credits <= 0 %>
+    <h4>No Credits<h4>
+  <% else %>
+    <button id='start' class="btn">Play Snake!</button>
+  <% end %>
 </div>
 
 <div class="game">

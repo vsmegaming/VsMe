@@ -1,5 +1,9 @@
 <div data-no-turbolink>
-  <%= link_to "Play Game", new_game_path, class: "btn" %>
+  <% if current_user.credits <= 0 %>
+    <button class="btn">No Credits</button>
+  <% else %>
+      <%= link_to "Play Game", new_game_path, class: "btn" %>
+  <% end %>
   <%= link_to "Leader Board", root_path, class: "btn pull-right" %>
   <h4>Credits: <%= current_user.credits %></h4>
   <h4>Wins: <%= current_user.wins %></h4>
