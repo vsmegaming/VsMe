@@ -1,8 +1,10 @@
 Vsme::Application.routes.draw do
   devise_for :users
 
-  root 'games#index'
+  root 'games#leader'
 
-  resource :games
+  resources :games do
+    get :leader
+  end
 
 end

@@ -22,12 +22,14 @@ class DeterminesWinner
       user_one.credits -= 5
       user_one.save
       user_two.credits += 5
+      user_two.wins += 1
       user_two.save
     elsif game_one.score > game_two.score
       last_result.winning_user_id = game_one.user_id
       last_result.losing_user_id = game_two.user_id
       last_result.save
       user_one.credits += 5
+      user_one.wins += 1
       user_one.save
       user_two.credits -= 5
       user_two.save
