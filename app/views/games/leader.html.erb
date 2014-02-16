@@ -1,0 +1,22 @@
+<div data-no-turbolink>
+  <%= link_to "User Dashboard", games_path, class: "btn" %>
+</div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Leaders</th>
+      <th>Wins</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @leaders.each do |leader| %>
+    <tr>
+      <td><%= leader.email %></td>
+      <td><%= leader.wins %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
