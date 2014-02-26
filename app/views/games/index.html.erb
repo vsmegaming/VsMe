@@ -1,13 +1,17 @@
 <div data-no-turbolink>
-  <%= link_to "Play Game", new_games_path, class: "btn" %>
-  <h4 class="pull-right">Credits: <%= current_user.credits %></h4>
+  <% if current_user.credits <= 0 %>
+    <a class="btn-main">No Credits</a>
+  <% else %>
+      <%= link_to "Play Game", new_game_path, class: "btn-main" %>
+  <% end %>
+  <%= link_to "Leader Board", root_path, class: "btn-main" %>
+  <h4>Credits: <%= current_user.credits %></h4>
+  <h4>Wins: <%= current_user.wins %></h4>
 </div>
 
 <table class="table">
   <thead>
     <tr>
-      <th>Score</th>
-      <th>Wager</th>
       <th>Outcome</th>
       <th>Opponent</th>
     </tr>
@@ -15,8 +19,6 @@
   <tbody>
     <% @games.each do |game| %>
     <tr>
-      <td><%= game.score %></td>
-      <td><%= game.credits_wagered %></td>
       <td><%= game.outcome(current_user) %></td>
       <td><%= game.opponent(current_user) %></td>
     </tr>

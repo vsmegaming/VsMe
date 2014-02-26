@@ -44,6 +44,9 @@ window.onload = function(){
 	var prevDir;
 	var food;
 	var score;
+	var gameDuration = 180; // duration of the game in seconds
+	var startPoint;
+	var currentTime;
 
 	//Touch areas
 	var leftArea, rightArea, upArea, downArea;
@@ -88,7 +91,9 @@ window.onload = function(){
 
 	$("#start").on("click", function(){
 	    playGame();
-	    $("#start").addClass("hidden"); //so user cannot reset game
+	    //$("#start").addClass("hidden"); //so user cannot reset game
+	    $("#start").remove();
+	    $(".navbar").remove();
 	});
 
 	function playGame()
@@ -101,6 +106,8 @@ window.onload = function(){
 	    setTouchAreas();
 	    //finally lets display the score
 	    score = 0;
+	    startPoint = (new Date).getTime(); // in milliseconds
+	    currentTime = 0;
 
 	    gameOver = false;
 	    window.scrollTo(0, 1); //Position screen
@@ -158,11 +165,14 @@ window.onload = function(){
 		prevDir = dir;
 		setTouchAreas();
 
+		//Timing
+		currentTime = Math.floor(((new Date).getTime() - startPoint)/1000);
+
 		//Lets add the game over clauses now
 		//This will end the game if the snake hits the wall
 		//Lets add the code for body collision
 		//Now if the head of the snake bumps into its body, the game will end
-		if(nx < 0 || nx >= w/cw || ny < 0 || ny >= h/cw || check_collision(nx, ny, snake_array))
+		if(nx < 0 || nx >= w/cw || ny < 0 || ny >= h/cw || check_collision(nx, ny, snake_array) || currentTime >= gameDuration)
 		{
 		    gameOver = true;
 		    endGame();
@@ -206,15 +216,22 @@ window.onload = function(){
 		var fontSize = 12*scaleX;
 		ctx.font = "normal " + fontSize + "px monospace";
 		ctx.fillStyle = "black";
-		ctx.fillText(score_text, 8*scaleX, canvasHeight - 8*scaleY);
+		//ctx.fillText(score_text, 8*scaleX, canvasHeight - 8*scaleY);
 		//ctx.fillText(debugText, 5, canvasHeight-16);
+
+		//Paint the time
+		var timeText = displayTime();
+
+		//Outside the canvas
+		$("#score").text(score_text);
+		$("#time").text(timeText);
 	    }
 	}
 
 	//Lets first create a generic function to paint cells
 	function paint_cell(x, y)
 	{
-	    ctx.fillStyle = "blue";
+	    ctx.fillStyle = "#0c9";
 	    ctx.fillRect(x*cw*scaleX, y*cw*scaleY, cw*scaleX, cw*scaleY);
 	    ctx.strokeStyle = "white";
 	    ctx.strokeRect(x*cw*scaleX, y*cw*scaleY, cw*scaleX, cw*scaleY);
@@ -232,6 +249,20 @@ window.onload = function(){
 		ctx.strokeStyle = "#eee";
 		ctx.strokeRect(rect.left, rect.top, rect.width, rect.height);
 	    }
+	}
+
+	function displayTime() {
+	    var timeLeft = gameDuration - currentTime;
+	    var minutes = Math.floor(timeLeft / 60);
+	    var seconds = timeLeft % 60;
+	    if (seconds < 10) seconds = "0" + seconds;
+	    var timeText = minutes + ":" + seconds;
+	    var fontSize = 12*scaleX;
+	    ctx.font = "normal " + fontSize + "px monospace";
+	    ctx.fillStyle = "black";
+	    //ctx.fillText(timeText, 5*canvasWidth/6, canvasHeight - 8*scaleY);
+
+	    return timeText;
 	}
 
 	function check_collision(x, y, array)

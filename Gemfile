@@ -13,6 +13,7 @@ gem 'jbuilder', '~> 1.2'
 gem 'devise'
 gem "twitter-bootstrap-rails"
 gem 'draper', '~> 1.3'
+gem 'bootstrap-sass'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.

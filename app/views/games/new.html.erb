@@ -1,22 +1,26 @@
 <div class='hidden'>
   <%= form_for @game do |f| %>
     <%= f.number_field :score %>
-    <%= f.submit "Submit", class: "btn" %>
+    <%= f.submit "Submit" %>
   <% end %>
 </div>
 
-<style>
-  #canvas {
-  max-width: 500px;
-  min-width: 225px;
-  width: 100%;
-  }
-</style>
-
-<div>
-  <button id='start' class="btn">Play Snake!</button>
+<div class="sign-in-center">
+  <% if current_user.credits <= 0 %>
+    <h4>No Credits<h4>
+  <% else %>
+    <button id='start' class="btn-main">Play Snake!</button>
+  <% end %>
 </div>
 
 <div class="game">
+  <div class='score-div'><span id='score'></span></div>
   <canvas id='canvas'></canvas>
+  <table class='hud-group'>
+    <tr>
+      <td><div class='time-div'><span class='glyphicon glyphicon-time'></span><br><span id='time'>0:00</span></div></td>
+      <td><div class='user-div'><span class='glyphicon glyphicon-user'></span><br><%= current_user.user_name %></div></td>
+      <td><div class='credits-div'><span class='glyphicon glyphicon-usd'></span><br><%= current_user.credits %></div></td>
+    </tr>
+  </table>
 </div>

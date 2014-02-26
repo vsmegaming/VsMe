@@ -15,10 +15,14 @@ class GamesController < ApplicationController
 
     if @game.save
       CreatesResults.with(@game)
-      redirect_to root_path
+      redirect_to games_path
     else
       render :new
     end
+  end
+
+  def leader
+    @leaders = User.all.sort { |a,b| b.wins <=> a.wins }
   end
 
   private

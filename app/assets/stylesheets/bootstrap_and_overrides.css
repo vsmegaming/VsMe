@@ -3,7 +3,7 @@
 
 Use Font Awesome icons (default)
 To use Glyphicons sprites instead of Font Awesome, replace with "require twitter-bootstrap-static/sprites"
-=require twitter-bootstrap-static/fontawesome
+=require twitter-bootstrap-static/sprites
  */
 
 body {
@@ -11,6 +11,10 @@ body {
   margin: 0 0 20px;
   padding-left: 0;
   padding-right: 0;
+  color: #fff;
+}
+
+a {
   color: #fff;
 }
 
@@ -32,6 +36,9 @@ body {
   margin-top: 10px;
   margin-bottom: 10px;
   display: block;
+  max-width: 400px;
+  min-width: 225px;
+  width: 100%;
 }
 
 .game {
@@ -69,7 +76,7 @@ body {
   margin: auto;
 }
 
-.btn-sign-in {
+.btn-main {
   padding: 6px 12px;
   margin-bottom: 0;
   font-size: 14px;
@@ -94,15 +101,44 @@ body {
 }
 
 .sign-in-links {
-  color: #b3b3b3;
+    color: #b3b3b3;
 }
 
 .container {
-  margin: 20px 20px;
+    margin: 20px 20px;
 }
 
 .navbar-inner {
-  border-radius: 0;
-  -webkit-border-radius: 0;
-  border: none;
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    border: none;
+}
+
+.hud-group {
+    margin: auto;
+    max-width: 400px;
+    min-width: 225px;
+    width: 100%;
+}
+
+.hud-group td {
+    overflow: hidden;
+    padding: 0;
+    text-align: center;
+}
+
+.time-div, .user-div, .credits-div {
+    padding: 8px 4px;
+}
+
+.time-div {
+    background-color: #09c;
+}
+
+.user-div {
+    background-color: #f60;
+}
+
+.credits-div {
+    background-color: #27c6af;
 }
