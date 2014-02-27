@@ -15,7 +15,7 @@ set :domain, 'vsmegaming.com'
 set :deploy_to, '/var/www/ruby'
 set :repository, 'https://github.com/vsmegaming/VsMe.git'
 #set :repository, 'https://github.com/matthewbentley/VsMe.git'
-set :branch, 'master'
+set :branch, 'test_server_settings'
 
 # Manually create these paths in shared/ (eg: shared/config/database.yml) in your server.
 # They will be linked in the 'deploy:link_shared_paths' step.
@@ -60,7 +60,7 @@ task :deploy => :environment do
     invoke :'deploy:link_shared_paths'
     invoke :'bundle:install'
     invoke :'rails:db_migrate'
-#    invoke :'rails:assets_precompile'
+    invoke :'rails:assets_precompile'
 
     to :launch do
       queue "touch #{deploy_to}/current/tmp/restart.txt"
