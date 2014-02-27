@@ -18,6 +18,6 @@ test:
 production:
   adapter: postgresql
   encoding: unicode
-  database: vsme_production
+  database: vsme_development
   pool: 5
   timeout: 5000
