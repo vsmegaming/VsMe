@@ -11,9 +11,9 @@ require 'mina/rbenv'  # for rbenv support. (http://rbenv.org)
 #   branch       - Branch name to deploy. (needed by mina/git)
 
 set :rails_env, 'production'
-set :domain, 'vpn.mtbentley.us'
+set :domain, 'vsmegaming.com'
 set :deploy_to, '/var/www/ruby'
-set :repository, 'https://github.com/matthewbentley/VsMe.git'
+set :repository, 'https://github.com/vsmegaming/VsMe.git'
 set :branch, 'master'
 
 # Manually create these paths in shared/ (eg: shared/config/database.yml) in your server.
@@ -58,7 +58,7 @@ task :deploy => :environment do
     invoke :'git:clone'
     invoke :'deploy:link_shared_paths'
     invoke :'bundle:install'
-#    invoke :'rails:db_migrate'
+    invoke :'rails:db_migrate'
 #    invoke :'rails:assets_precompile'
 
     to :launch do
