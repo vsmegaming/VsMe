@@ -14,6 +14,7 @@ set :rails_env, 'production'
 set :domain, 'vsmegaming.com'
 set :deploy_to, '/var/www/ruby'
 set :repository, 'https://github.com/vsmegaming/VsMe.git'
+#set :repository, 'https://github.com/matthewbentley/VsMe.git'
 set :branch, 'master'
 
 # Manually create these paths in shared/ (eg: shared/config/database.yml) in your server.
