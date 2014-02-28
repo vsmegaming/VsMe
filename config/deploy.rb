@@ -71,9 +71,8 @@ end
 desc "Deletes everything in the database."
 task :reset => :environment do
   # Put code to reset the db here
-  # That is:
-  #  * Truncate all tables
-  #  * Clean up (if needed)
+  invoke :'rails:db_reset'
+  invoke :'rails:db_migrate'
 end
 
 # For help in making your deploy script, see the Mina documentation:
