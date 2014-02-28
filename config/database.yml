@@ -2,6 +2,7 @@ development:
   adapter: postgresql
   encoding: unicode
   database: vsme_development
+  template: template0
   pool: 5
   timeout: 5000
 
@@ -12,6 +13,7 @@ test:
   adapter: postgresql
   encoding: unicode
   database: vsme_test
+  template: template0
   pool: 5
   timeout: 5000
 
