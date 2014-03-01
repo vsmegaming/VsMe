@@ -7,4 +7,6 @@ Vsme::Application.routes.draw do
     get :leader
   end
 
+  get "high_scores" => "games#scorer"
+
 end

@@ -5,8 +5,10 @@
       <%= link_to "Play Game", new_game_path, class: "btn-main" %>
   <% end %>
   <%= link_to "Leader Board", root_path, class: "btn-main" %>
+  <%= link_to "High Scores", high_scores_path, class: "btn-main" %>
   <h4>Credits: <%= current_user.credits %></h4>
   <h4>Wins: <%= current_user.wins %></h4>
+  <h4>High score: <%= current_user.high_score %></h4>
 </div>
 
 <table class="table">

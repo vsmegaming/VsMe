@@ -4,6 +4,8 @@
   <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
     <%= f.email_field :email, :autofocus => true, placeholder: "email address" %>
     <%= f.password_field :password, placeholder: "password" %>
+    <p>You can only play on touch-enabled mobile devices</p>
+    <p>Tap in the direction that you want the snake to turn!</p>
     <%= f.submit "sign in", class: "btn-main" %>
 
   <% end %>

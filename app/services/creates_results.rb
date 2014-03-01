@@ -10,6 +10,13 @@ class CreatesResults
 
   def initialize game
     @game = game
+    
+    @user = User.find(@game.user_id)
+    if @game.score > @user.high_score
+      @user.high_score = @game.score
+      @user.save
+    end
+
     @results = Result.all
     last_result = nil
 
