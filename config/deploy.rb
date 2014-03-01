@@ -19,7 +19,7 @@ set :branch, 'master'
 
 # Manually create these paths in shared/ (eg: shared/config/database.yml) in your server.
 # They will be linked in the 'deploy:link_shared_paths' step.
-set :shared_paths, ['log']
+set :shared_paths, ['log', 'pw.rb']
 
 # Optional settings:
 set :user, 'ruby'    # Username in the server to SSH to.
