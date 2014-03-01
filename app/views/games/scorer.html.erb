@@ -1,0 +1,20 @@
+<div data-no-turbolink>
+  <%= link_to "User Dashboard", games_path, class: "btn-main" %>
+</div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Players</th>
+      <th>High Score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @scorers.each do |scorer| %>
+      <tr>
+        <td><%= scorer.try(:user_name) || "(no name given)" %></td>
+        <td><%= scorer.high_score %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

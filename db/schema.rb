@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140216180532) do
+ActiveRecord::Schema.define(version: 20140301195858) do
 
   create_table "games", force: true do |t|
     t.integer  "user_id"
@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(version: 20140216180532) do
     t.datetime "updated_at"
     t.integer  "wins",                   default: 0
     t.string   "user_name"
+    t.integer  "high_score",             default: 0
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

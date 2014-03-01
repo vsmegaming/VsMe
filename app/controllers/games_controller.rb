@@ -25,6 +25,10 @@ class GamesController < ApplicationController
     @leaders = User.all.sort { |a,b| b.wins <=> a.wins }
   end
 
+  def scorer
+    @scorers = User.all.sort { |a,b| b.high_score <=> a.high_score }
+  end
+
   private
 
   def game_attrs
