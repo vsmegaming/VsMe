@@ -69,6 +69,8 @@ Vsme::Application.configure do
 
   config.action_mailer.delivery_method = :smtp
 
+  import pw.rb
+
   config.action_mailer.smtp_settings = {
     address: SERVER,
     port: PORT,
