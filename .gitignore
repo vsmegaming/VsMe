@@ -18,3 +18,6 @@ logfile
 
 # Ignore emacs temporary files
 *~
+
+# Ignore local environmental variables
+.env
