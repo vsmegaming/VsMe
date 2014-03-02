@@ -6,11 +6,11 @@
 </div>
 
 <div class="sign-in-center">
-  <% if current_user.credits <= 0 %>
+  <!--<% if current_user.credits <= 0 %>
     <h4>No Credits<h4>
-  <% else %>
+  <% else %>-->
     <button id='start' class="btn-main">Play Snake!</button>
-  <% end %>
+  <!--<% end %>-->
 </div>
 
 <div class="game">
@@ -20,7 +20,7 @@
     <tr>
       <td><div class='time-div'><!--<i class='icon-time'></i><br>--><span id='time'>0:00</span></div></td>
       <td><div class='user-div'><!--<i class='icon-user'></i><br>--><%= current_user.user_name %></div></td>
-      <td><div class='credits-div'><!--<i class='icon-tags'></i><br>--><%= current_user.credits %></div></td>
+      <td><div class='credits-div'><!--<i class='icon-tags'></i><br>--><%= current_user.high_score %></div></td>
     </tr>
   </table>
 </div>
