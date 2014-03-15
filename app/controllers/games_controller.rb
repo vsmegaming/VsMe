@@ -9,16 +9,16 @@ class GamesController < ApplicationController
   end
 
   def create
-    @game = Game.new(game_attrs)
-    @game.user_id = current_user.id
-    @game.credits_wagered = 5
+    # @game = Game.new(game_attrs)
+    # @game.user_id = current_user.id
+    # @game.credits_wagered = 5
 
-    if @game.save
-      CreatesResults.with(@game)
+    # if @game.save
+      # CreatesResults.with(@game)
       redirect_to games_path
-    else
-      render :new
-    end
+    # else
+      # render :new
+    # end
   end
 
   def leader
